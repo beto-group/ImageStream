@@ -46,7 +46,7 @@ function App(props) {
                     dc.require(componentPath)
                 ]);
 
-                const loadScriptPath = dc.resolvePath("LOAD SCRIPT/src/LoadScriptUpgrade.js");
+                const loadScriptPath = folderPath + "/src/utils/LoadScriptUpgrade.js";
                 const loadScriptModule = await dc.require(loadScriptPath);
 
                 setModules({
