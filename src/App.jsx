@@ -169,6 +169,7 @@ function App(props) {
                 isInception={isInception}
                 onToggleFullTab={onToggleFullTab}
                 styles={STYLES}
+                folderPath={folderPath}
                 {...rest}
             />
         </div>
