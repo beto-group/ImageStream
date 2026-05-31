@@ -4,8 +4,8 @@ cssclasses:
 ---
 
 ```datacorejsx
-const activeFile = dc.resolvePath("IMAGE STREAM") || "_RESOURCES/DATACORE/_DONE/IMAGE STREAM/IMAGE STREAM";
-const folderPath = activeFile.substring(0, activeFile.lastIndexOf('/'));
-const { View } = await dc.require(folderPath + "/src/index.jsx");
+const activeFile = dc.resolvePath("IMAGE STREAM/src/index.jsx");
+const folderPath = activeFile.substring(0, activeFile.lastIndexOf('/src'));
+const { View } = await dc.require(activeFile);
 return await View({ folderPath, dc });
 ```
