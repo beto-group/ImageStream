@@ -2,8 +2,11 @@
  * IMAGE STREAM - Index View Factory
  * Integrates FullTab DOM reparenting and reload command listener.
  */
+console.log("IMAGE STREAM: index.jsx module evaluation");
+
 async function View({ folderPath, isInception, dc, ...props }) {
     const STYLE_ID = "impeccable-status-imagestream";
+    console.log("IMAGE STREAM: View factory executing with folderPath:", folderPath);
 
     function findNearestAncestorWithClass(element, className) {
         if (!element) return null;
@@ -61,6 +64,8 @@ async function View({ folderPath, isInception, dc, ...props }) {
         const containerRef = dc.useRef(null);
         const stateRefs = dc.useRef({}).current;
 
+        console.log("IMAGE STREAM: SafeRoot component rendering, appComponent:", !!appComponent, "error:", error ? error.message : "none");
+
         const toggleFullTab = function () {
             if (isInception) return;
             setIsFullTab(function (prev) { return !prev; });
@@ -68,6 +73,7 @@ async function View({ folderPath, isInception, dc, ...props }) {
 
         // --- DOM Reparenting Full-tab lifecycle ---
         dc.useEffect(function () {
+            console.log("IMAGE STREAM: SafeRoot DOM reparenting useEffect trigger, isFullTab:", isFullTab);
             if (!isFullTab || isInception) return;
 
             const container = containerRef.current;
@@ -75,6 +81,7 @@ async function View({ folderPath, isInception, dc, ...props }) {
 
             const targetPaneContent = findNearestAncestorWithClass(container, "workspace-leaf-content");
             if (!targetPaneContent) {
+                console.warn("IMAGE STREAM: Could not find target workspace-leaf-content");
                 setIsFullTab(false);
                 return;
             }
@@ -196,10 +203,13 @@ async function View({ folderPath, isInception, dc, ...props }) {
         // --- Module Loader ---
         dc.useEffect(function () {
             async function load() {
+                console.log("IMAGE STREAM: SafeRoot module loader triggered, requesting App.jsx");
                 try {
                     const appModule = await dc.require(folderPath + "/src/App.jsx");
+                    console.log("IMAGE STREAM: App.jsx loaded successfully");
                     setAppComponent(function () { return appModule.App; });
                 } catch (e) {
+                    console.error("IMAGE STREAM: App.jsx load failed:", e);
                     setError(e);
                 }
             }
