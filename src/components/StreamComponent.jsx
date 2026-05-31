@@ -1,5 +1,5 @@
 function StreamComponent(props) {
-    const { dc, loadScript, isFullTab, isInception, onToggleFullTab, styles, onCodeReloadRequest } = props;
+    const { dc, loadScript, isFullTab, isInception, onToggleFullTab, styles, onCodeReloadRequest, folderPath } = props;
     const { useState, useEffect, useRef } = dc;
 
     const canvasContainerRef = useRef(null);
@@ -72,8 +72,14 @@ function StreamComponent(props) {
                 await new Promise(function (resolve) { setTimeout(resolve, 50); });
 
                 // 2. Load Modules
-                const THREE = await loadScript(dc, 'https://unpkg.com/three@0.160.0/build/three.module.js', { type: 'module' });
-                const GUI = await loadScript(dc, 'https://unpkg.com/lil-gui@0.19.1/dist/lil-gui.esm.min.js', { type: 'module' });
+                const THREE = await loadScript(dc, 'https://unpkg.com/three@0.160.0/build/three.module.js', { 
+                    type: 'module',
+                    cacheDir: folderPath + "/data/cache/scripts"
+                });
+                const GUI = await loadScript(dc, 'https://unpkg.com/lil-gui@0.19.1/dist/lil-gui.esm.min.js', { 
+                    type: 'module',
+                    cacheDir: folderPath + "/data/cache/scripts"
+                });
 
                 if (!active) return;
                 setIsLoaded(true);
